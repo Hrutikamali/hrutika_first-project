@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Get in touch with the StyleHub customer concierge team for sizing assistance, order questions, or wholesale inquiries.">
+  <title>Contact Us | StyleHub</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .contact-hero {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #fff;
+      padding: 4rem 0;
+      text-align: center;
+    }
+    .contact-hero h1 {
+      font-family: var(--font-heading);
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+    .contact-hero p {
+      color: #94a3b8;
+      font-size: 1.1rem;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      margin: 4rem 0 6rem;
+      align-items: start;
+    }
+
+    .contact-form-card {
+      background: #ffffff;
+      padding: 2.5rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: all var(--transition-fast);
+      background: var(--bg-main);
+    }
+
+    .form-control:focus {
+      background: #ffffff;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.1);
+    }
+
+    .form-feedback {
+      font-size: 0.8rem;
+      margin-top: 0.35rem;
+      display: none;
+    }
+    .form-feedback.error {
+      color: var(--danger);
+      display: block;
+    }
+
+    .contact-info-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .contact-info-card {
+      background: #ffffff;
+      padding: 1.75rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .contact-icon-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-full);
+      background: var(--accent-light);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .contact-info-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-info-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .alert-box {
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+    .alert-box.success {
+      background: var(--success-bg);
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+      display: block;
+    }
+    .alert-box.error {
+      background: var(--danger-bg);
+      color: #991b1b;
+      border: 1px solid #fecaca;
+      display: block;
+    }
+
+    @media (max-width: 800px) {
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="site-header">
+    <div class="container navbar">
+      <a href="index.html" class="nav-brand">
+        Style<span>Hub</span>
+        <span class="brand-badge">Official</span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle navigation">☰</button>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link">Shop All</a>
+        <a href="shop.html?gender=men" class="nav-link">Men</a>
+        <a href="shop.html?gender=women" class="nav-link">Women</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="shop.html" class="nav-action-btn" title="Search">🔍</a>
+        <a href="cart.html" class="nav-action-btn" title="Cart">
+          🛒
+          <span class="cart-badge" style="display: none;">0</span>
+        </a>
+        <a href="admin/login.html" class="nav-admin-link">Admin</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="contact-hero">
+    <div class="container">
+      <h1>We're Here to Help</h1>
+      <p>Have questions about sizing, an existing order, or styling recommendations?</p>
+    </div>
+  </section>
+
+  <!-- Contact Form & Info -->
+  <main class="container">
+    <div class="contact-layout">
+      <!-- Form -->
+      <div class="contact-form-card">
+        <h2 style="font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--primary);">
+          Send Us a Note
+        </h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.75rem;">
+          Our concierge replies to all customer inquiries within one business day.
+        </p>
+
+        <div id="contact-alert" class="alert-box"></div>
+
+        <form id="contact-form" novalidate>
+          <div class="form-group">
+            <label for="contact-name">Full Name *</label>
+            <input type="text" id="contact-name" class="form-control" placeholder="e.g. Jane Doe" required>
+            <div class="form-feedback" id="feedback-name">Please enter your full name (minimum 2 characters).</div>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-email">Email Address *</label>
+            <input type="email" id="contact-email" class="form-control" placeholder="jane.doe@example.com" required>
+            <div class="form-feedback" id="feedback-email">Please enter a valid email address.</div>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-message">Message *</label>
+            <textarea id="contact-message" class="form-control" rows="5" placeholder="Tell us how we can help..." required></textarea>
+            <div class="form-feedback" id="feedback-message">Please enter a message (minimum 10 characters).</div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="btn-submit-contact" style="width: 100%;">
+            Send Message ✉️
+          </button>
+        </form>
+      </div>
+
+      <!-- Info Cards -->
+      <div class="contact-info-panel">
+        <div class="contact-info-card">
+          <div class="contact-icon-circle">📍</div>
+          <div>
+            <h3>StyleHub Flagship Atelier</h3>
+            <p>100 Fashion Avenue, 4th Floor<br>New York, NY 10001, United States</p>
+          </div>
+        </div>
+
+        <div class="contact-info-card">
+          <div class="contact-icon-circle">📞</div>
+          <div>
+            <h3>Customer Service Hotline</h3>
+            <p>+1 (800) 555-STYLE<br>Monday – Friday, 9:00 AM – 8:00 PM EST</p>
+          </div>
+        </div>
+
+        <div class="contact-info-card">
+          <div class="contact-icon-circle">✉️</div>
+          <div>
+            <h3>Direct Email Inquiries</h3>
+            <p>Support: support@stylehub.store<br>Press: press@stylehub.store</p>
+          </div>
+        </div>
+
+        <div class="contact-info-card">
+          <div class="contact-icon-circle">📦</div>
+          <div>
+            <h3>Returns & Exchanges</h3>
+            <p>Pre-printed return shipping labels are included in every order packaging bag.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <div>&copy; 2026 StyleHub Inc. All rights reserved.</div>
+      <div><a href="index.html" style="color: #cbd5e1;">Return to Home</a></div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/contact.js"></script>
+</body>
+</html>

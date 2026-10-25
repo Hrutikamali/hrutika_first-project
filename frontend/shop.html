@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shop StyleHub clothing collections - Browse men's and women's shirts, denim jeans, jackets, dresses, and tops with flexible filters and fast search.">
+  <title>Shop All Clothing | StyleHub</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    /* Shop Page Layout */
+    .shop-header-banner {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #fff;
+      padding: 3rem 0;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .shop-header-banner h1 {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    .shop-header-banner p {
+      color: #94a3b8;
+      font-size: 1.05rem;
+    }
+
+    .shop-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2.5rem;
+      align-items: start;
+      margin-bottom: 5rem;
+    }
+
+    /* Filters Sidebar */
+    .filter-sidebar {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      position: sticky;
+      top: 96px;
+    }
+
+    .filter-group {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .filter-group:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .filter-title {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .filter-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .filter-label {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--secondary);
+      cursor: pointer;
+      user-select: none;
+      transition: color var(--transition-fast);
+    }
+    .filter-label:hover {
+      color: var(--primary);
+    }
+
+    .filter-label input[type="radio"],
+    .filter-label input[type="checkbox"] {
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    /* Size Filter Chips */
+    .size-filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .size-filter-btn {
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: var(--bg-card);
+      color: var(--secondary);
+      transition: all var(--transition-fast);
+    }
+    .size-filter-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .size-filter-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* Price Slider */
+    .price-range-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .price-range-wrapper input[type="range"] {
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .price-indicator {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .btn-reset-filters {
+      width: 100%;
+      padding: 0.65rem;
+      border: 1px dashed var(--border-subtle);
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: all var(--transition-fast);
+      margin-top: 1rem;
+    }
+    .btn-reset-filters:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    /* Controls Bar above grid */
+    .shop-controls-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      background: #fff;
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 240px;
+      max-width: 400px;
+    }
+    .search-input-wrapper input {
+      width: 100%;
+      padding: 0.6rem 1rem 0.6rem 2.4rem;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color var(--transition-fast);
+    }
+    .search-input-wrapper input:focus {
+      border-color: var(--accent);
+    }
+    .search-input-wrapper .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .sort-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--secondary);
+    }
+    .sort-select {
+      padding: 0.55rem 1rem;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      background: #fff;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--primary);
+      outline: none;
+      cursor: pointer;
+    }
+    .sort-select:focus {
+      border-color: var(--accent);
+    }
+
+    .products-count-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: #fff;
+      border-radius: var(--radius-lg);
+      border: 1px dashed var(--border-subtle);
+      grid-column: 1 / -1;
+    }
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .empty-state h3 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .empty-state p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Responsive Shop */
+    @media (max-width: 900px) {
+      .shop-layout {
+        grid-template-columns: 1fr;
+      }
+      .filter-sidebar {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container navbar">
+      <a href="index.html" class="nav-brand">
+        Style<span>Hub</span>
+        <span class="brand-badge">Official</span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        ☰
+      </button>
+
+      <nav class="nav-links" id="primary-navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link active">Shop All</a>
+        <a href="shop.html?gender=men" class="nav-link">Men</a>
+        <a href="shop.html?gender=women" class="nav-link">Women</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="cart.html" class="nav-action-btn" title="Shopping Cart" aria-label="Shopping Cart">
+          🛒
+          <span class="cart-badge" style="display: none;">0</span>
+        </a>
+        <a href="admin/login.html" class="nav-admin-link">Admin</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <div class="shop-header-banner">
+    <div class="container">
+      <h1 id="shop-page-title">Curated Clothing Catalog</h1>
+      <p>Discover versatile staples, premium textures, and contemporary fashion designed to endure.</p>
+    </div>
+  </div>
+
+  <!-- Shop Main Content -->
+  <main class="container">
+    <div class="shop-layout">
+      <!-- Filter Sidebar -->
+      <aside class="filter-sidebar">
+        <!-- Gender Filter -->
+        <div class="filter-group">
+          <div class="filter-title">Department</div>
+          <div class="filter-list">
+            <label class="filter-label">
+              <input type="radio" name="gender-filter" value="all" checked>
+              <span>All Collections</span>
+            </label>
+            <label class="filter-label">
+              <input type="radio" name="gender-filter" value="men">
+              <span>Men's Clothing</span>
+            </label>
+            <label class="filter-label">
+              <input type="radio" name="gender-filter" value="women">
+              <span>Women's Clothing</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="filter-group">
+          <div class="filter-title">Category</div>
+          <div class="filter-list">
+            <label class="filter-label">
+              <input type="radio" name="category-filter" value="all" checked>
+              <span>All Categories</span>
+            </label>
+            <label class="filter-label">
+              <input type="radio" name="category-filter" value="shirts">
+              <span>Shirts</span>
+            </label>
+            <label class="filter-label">
+              <input type="radio" name="category-filter" value="t-shirts">
+              <span>T-Shirts</span>
+            </label>
+            <label class="filter-label">
+              <input type="radio" name="category-filter" value="tops">
+              <span>Tops & Knits</span>
+            </label>
+            <label class="filter-label">
+              <input type="radio" name="category-filter" value="jeans">
+              <span>Denim Jeans</span>
+            </label>
+            <label class="filter-label">
+              <input type="radio" name="category-filter" value="pants">
+              <span>Pants & Trousers</span>
+            </label>
+            <label class="filter-label">
+              <input type="radio" name="category-filter" value="dresses">
+              <span>Dresses</span>
+            </label>
+            <label class="filter-label">
+              <input type="radio" name="category-filter" value="jackets">
+              <span>Jackets & Coats</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Size Filter -->
+        <div class="filter-group">
+          <div class="filter-title">Size</div>
+          <div class="size-filter-chips">
+            <button class="size-filter-btn active" data-size="all">All</button>
+            <button class="size-filter-btn" data-size="XS">XS</button>
+            <button class="size-filter-btn" data-size="S">S</button>
+            <button class="size-filter-btn" data-size="M">M</button>
+            <button class="size-filter-btn" data-size="L">L</button>
+            <button class="size-filter-btn" data-size="XL">XL</button>
+            <button class="size-filter-btn" data-size="XXL">XXL</button>
+          </div>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div class="filter-group">
+          <div class="filter-title">Max Price</div>
+          <div class="price-range-wrapper">
+            <input type="range" id="price-range" min="20" max="200" step="5" value="200">
+            <div class="price-indicator">
+              <span>$20</span>
+              <span id="price-indicator-val">Up to $200</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-reset-filters" id="btn-reset-filters">
+          ↺ Reset All Filters
+        </button>
+      </aside>
+
+      <!-- Products Display Area -->
+      <section>
+        <!-- Controls Bar -->
+        <div class="shop-controls-bar">
+          <div class="search-input-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-input" placeholder="Search by name, style, fabric..." aria-label="Search products">
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
+            <div class="products-count-label">
+              Showing <strong id="products-count">0</strong> products
+            </div>
+
+            <div class="sort-wrapper">
+              <label for="sort-select">Sort by:</label>
+              <select id="sort-select" class="sort-select">
+                <option value="featured">Featured</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="newest">Newest Arrivals</option>
+                <option value="name-asc">Name: A to Z</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid" id="shop-products-grid">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <div>&copy; 2026 StyleHub Inc. All rights reserved.</div>
+      <div><a href="index.html" style="color: #cbd5e1;">Return to Home</a></div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/sample-data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/products.js"></script>
+</body>
+</html>

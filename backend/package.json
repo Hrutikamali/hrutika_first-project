@@ -1,0 +1,29 @@
+{
+  "name": "stylehub-backend",
+  "version": "1.0.0",
+  "description": "StyleHub Online Clothing Store - Express REST API & Database Integration",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "create-admin": "node scripts/create-admin.js",
+    "test": "node tests/api.test.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.9.8"
+  },
+  "keywords": [
+    "ecommerce",
+    "clothing-store",
+    "express",
+    "mysql",
+    "rest-api"
+  ],
+  "author": "StyleHub Team",
+  "license": "MIT"
+}

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View product specifications, sizes, fabrics, and customer details on StyleHub.">
+  <title>Product Details | StyleHub</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .product-details-section {
+      padding: 3.5rem 0 5rem;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    .breadcrumb a:hover {
+      color: var(--accent);
+    }
+
+    .product-detail-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .detail-gallery {
+      position: sticky;
+      top: 100px;
+    }
+
+    .main-image-container {
+      background: var(--bg-alt);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-light);
+      position: relative;
+    }
+
+    .main-image-container img {
+      width: 100%;
+      height: 540px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .main-image-container:hover img {
+      transform: scale(1.03);
+    }
+
+    .detail-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .detail-title {
+      font-family: var(--font-heading);
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .detail-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .detail-price {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .detail-original-price {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+
+    .stock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-full);
+      background: var(--success-bg);
+      color: var(--success);
+      margin-left: 0.5rem;
+    }
+
+    .detail-desc {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--secondary);
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .selector-label {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .size-selector-grid {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .size-option-btn {
+      min-width: 54px;
+      height: 48px;
+      padding: 0 1rem;
+      border: 1.5px solid var(--border-light);
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--primary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .size-option-btn:hover {
+      border-color: var(--primary);
+    }
+
+    .size-option-btn.selected {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+    }
+
+    .color-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--secondary);
+      margin-bottom: 1.75rem;
+    }
+
+    .quantity-control-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .quantity-picker {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .qty-btn {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--bg-alt);
+      transition: background var(--transition-fast);
+    }
+    .qty-btn:hover {
+      background: var(--border-light);
+    }
+
+    .qty-input {
+      width: 50px;
+      height: 44px;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      outline: none;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .action-row .btn-primary {
+      flex: 1;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+    }
+
+    .perks-box {
+      background: var(--bg-alt);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--secondary);
+    }
+
+    @media (max-width: 900px) {
+      .product-detail-layout {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .detail-gallery {
+        position: static;
+      }
+      .main-image-container img {
+        height: 420px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="site-header">
+    <div class="container navbar">
+      <a href="index.html" class="nav-brand">
+        Style<span>Hub</span>
+        <span class="brand-badge">Official</span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle navigation">☰</button>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link">Shop All</a>
+        <a href="shop.html?gender=men" class="nav-link">Men</a>
+        <a href="shop.html?gender=women" class="nav-link">Women</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="shop.html" class="nav-action-btn" title="Search">🔍</a>
+        <a href="cart.html" class="nav-action-btn" title="Cart">
+          🛒
+          <span class="cart-badge" style="display: none;">0</span>
+        </a>
+        <a href="admin/login.html" class="nav-admin-link">Admin</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Product Details Section -->
+  <main class="container product-details-section">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <a href="shop.html">Shop</a>
+      <span>/</span>
+      <span id="breadcrumb-product-name" style="color: var(--primary); font-weight: 600;">Product</span>
+    </nav>
+
+    <!-- Main Detail Grid -->
+    <div class="product-detail-layout" id="product-details-content">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- Related Products -->
+    <section class="section" style="margin-top: 3rem; padding-top: 3rem; border-top: 1px solid var(--border-light);">
+      <div class="section-header" style="margin-bottom: 2rem;">
+        <span class="section-tag">Complete the Look</span>
+        <h2 class="section-title" style="font-size: 1.85rem;">Related Styles You May Like</h2>
+      </div>
+      <div class="product-grid" id="related-products-grid">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <div>&copy; 2026 StyleHub Inc. All rights reserved.</div>
+      <div><a href="shop.html" style="color: #cbd5e1;">Continue Shopping →</a></div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/sample-data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/product-details.js"></script>
+</body>
+</html>

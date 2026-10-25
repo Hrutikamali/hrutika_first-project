@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="StyleHub Admin Portal - Authenticate to manage inventory, catalog items, and customer inquiries.">
+  <title>Admin Login | StyleHub</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-login-layout">
+
+  <div class="login-card">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <a href="../index.html" class="nav-brand" style="justify-content: center; font-size: 1.8rem; margin-bottom: 0.5rem;">
+        Style<span>Hub</span>
+      </a>
+      <span class="admin-badge-tag">Staff Management Portal</span>
+    </div>
+
+    <div id="login-error-alert" class="toast toast-error" style="display: none; margin-bottom: 1.25rem; width: 100%; animation: none;">
+      Invalid credentials provided
+    </div>
+
+    <form id="admin-login-form">
+      <div style="margin-bottom: 1.25rem;">
+        <label for="admin-email" style="display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--primary);">
+          Username or Email
+        </label>
+        <input type="text" id="admin-email" class="newsletter-input" style="width: 100%;" placeholder="admin@stylehub.store" required autocomplete="username">
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <label for="admin-password" style="display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--primary);">
+          Password
+        </label>
+        <input type="password" id="admin-password" class="newsletter-input" style="width: 100%;" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+
+      <div style="background: var(--bg-alt); padding: 0.75rem 1rem; border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--secondary); margin-bottom: 1.5rem;">
+        🔑 <strong>Default Admin Credentials:</strong><br>
+        Email: <code>admin@stylehub.store</code><br>
+        Password: <code>admin123</code>
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="btn-login" style="width: 100%; padding: 0.85rem;">
+        Sign In to Dashboard →
+      </button>
+    </form>
+
+    <div style="text-align: center; margin-top: 1.5rem;">
+      <a href="../index.html" style="font-size: 0.85rem; color: var(--text-muted);">
+        ← Return to Main Storefront
+      </a>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('admin-login-form');
+      const errorAlert = document.getElementById('login-error-alert');
+      const loginBtn = document.getElementById('btn-login');
+
+      // Check if already logged in
+      const existingToken = localStorage.getItem('stylehub_admin_token');
+      if (existingToken) {
+        window.location.href = 'dashboard.html';
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorAlert.style.display = 'none';
+
+        const email = document.getElementById('admin-email').value.trim();
+        const password = document.getElementById('admin-password').value;
+
+        loginBtn.disabled = true;
+        loginBtn.textContent = 'Authenticating...';
+
+        try {
+          const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (res.ok && data.token) {
+            localStorage.setItem('stylehub_admin_token', data.token);
+            localStorage.setItem('stylehub_admin_user', JSON.stringify(data.user || { email }));
+            window.location.href = 'dashboard.html';
+            return;
+          } else {
+            throw new Error(data.error || 'Invalid admin credentials');
+          }
+        } catch (err) {
+          // If backend offline or testing standalone, allow default demo credentials
+          if (email === 'admin@stylehub.store' && password === 'admin123') {
+            localStorage.setItem('stylehub_admin_token', 'demo-session-token-' + Date.now());
+            localStorage.setItem('stylehub_admin_user', JSON.stringify({ email: 'admin@stylehub.store', name: 'Store Manager' }));
+            window.location.href = 'dashboard.html';
+          } else {
+            errorAlert.textContent = err.message || 'Authentication failed. Please verify credentials.';
+            errorAlert.style.display = 'flex';
+          }
+        } finally {
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Sign In to Dashboard →';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

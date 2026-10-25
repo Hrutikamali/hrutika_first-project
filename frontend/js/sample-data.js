@@ -1,0 +1,192 @@
+/* ==========================================================================
+   StyleHub - Sample Clothing Store Products
+   High-quality starter data for Men & Women fashion items
+   Used for immediate frontend display in Phase 2 & 3
+   ========================================================================== */
+
+const SAMPLE_PRODUCTS = [
+  {
+    id: 1,
+    name: "Classic Oxford Cotton Shirt",
+    description: "Tailored from breathable 100% Egyptian cotton, this button-down shirt offers timeless elegance for work or weekend styling.",
+    price: 49.99,
+    original_price: 69.99,
+    category: "shirts",
+    gender: "men",
+    sizes: ["S", "M", "L", "XL"],
+    color: "Sky Blue",
+    image_url: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=700&q=80",
+    stock: 24,
+    is_featured: true,
+    is_new: false
+  },
+  {
+    id: 2,
+    name: "Floral Wrap Midi Dress",
+    description: "Flowing lightweight crepe fabric with a flattering V-neckline, waist tie belt, and charming botanical print for sunny days.",
+    price: 64.50,
+    original_price: 85.00,
+    category: "dresses",
+    gender: "women",
+    sizes: ["XS", "S", "M", "L"],
+    color: "Blush Floral",
+    image_url: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=700&q=80",
+    stock: 18,
+    is_featured: true,
+    is_new: true
+  },
+  {
+    id: 3,
+    name: "Heavyweight Boxy Crewneck T-Shirt",
+    description: "Made from 240 GSM organic ring-spun cotton. Features a relaxed drop-shoulder cut and durable ribbed collar.",
+    price: 28.00,
+    original_price: 35.00,
+    category: "t-shirts",
+    gender: "men",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    color: "Charcoal Black",
+    image_url: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=700&q=80",
+    stock: 45,
+    is_featured: true,
+    is_new: false
+  },
+  {
+    id: 4,
+    name: "Ribbed Knit Sleeveless Top",
+    description: "Soft viscose blend ribbed tank top with a high neckline. Perfect layering essential for all seasons.",
+    price: 24.99,
+    original_price: 32.00,
+    category: "tops",
+    gender: "women",
+    sizes: ["XS", "S", "M", "L"],
+    color: "Cream Ivory",
+    image_url: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=700&q=80",
+    stock: 30,
+    is_featured: false,
+    is_new: true
+  },
+  {
+    id: 5,
+    name: "Slim-Fit Selvedge Denim Jeans",
+    description: "Crafted from 13.5oz Japanese stretch selvedge denim. Clean wash with custom copper hardware and 5-pocket design.",
+    price: 79.99,
+    original_price: 99.99,
+    category: "jeans",
+    gender: "men",
+    sizes: ["30", "32", "34", "36"],
+    color: "Deep Indigo",
+    image_url: "https://images.unsplash.com/photo-1542272604-780c96856592?auto=format&fit=crop&w=700&q=80",
+    stock: 22,
+    is_featured: true,
+    is_new: false
+  },
+  {
+    id: 6,
+    name: "High-Rise Straight Leg Denim",
+    description: "Vintage inspired 90s silhouette cut from structured denim with a flattering high waist and ankle grazing hem.",
+    price: 69.00,
+    original_price: 89.00,
+    category: "jeans",
+    gender: "women",
+    sizes: ["26", "28", "30", "32"],
+    color: "Vintage Light Blue",
+    image_url: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=700&q=80",
+    stock: 15,
+    is_featured: true,
+    is_new: true
+  },
+  {
+    id: 7,
+    name: "Vintage Biker Leather Jacket",
+    description: "Premium full-grain synthetic leather jacket featuring silver hardware, asymmetric zipper, and satin lining.",
+    price: 119.00,
+    original_price: 150.00,
+    category: "jackets",
+    gender: "women",
+    sizes: ["S", "M", "L"],
+    color: "Midnight Black",
+    image_url: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=80",
+    stock: 12,
+    is_featured: true,
+    is_new: true
+  },
+  {
+    id: 8,
+    name: "Urban Utility Bomber Jacket",
+    description: "Water-resistant nylon outer shell with thermal quilting, sleeve utility pocket, and ribbed athletic trims.",
+    price: 95.00,
+    original_price: 125.00,
+    category: "jackets",
+    gender: "men",
+    sizes: ["M", "L", "XL"],
+    color: "Olive Green",
+    image_url: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=700&q=80",
+    stock: 16,
+    is_featured: false,
+    is_new: true
+  },
+  {
+    id: 9,
+    name: "Pleated Tailored Trousers",
+    description: "Sophisticated wide-leg cut with front pleats, slant pockets, and a clean belt-looped waistband.",
+    price: 58.00,
+    original_price: 75.00,
+    category: "pants",
+    gender: "women",
+    sizes: ["XS", "S", "M", "L"],
+    color: "Warm Taupe",
+    image_url: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=700&q=80",
+    stock: 20,
+    is_featured: false,
+    is_new: false
+  },
+  {
+    id: 10,
+    name: "Chino Relaxed Pants",
+    description: "Durable stretch cotton twill pants tailored for daily comfort, office wear, or casual outings.",
+    price: 48.00,
+    original_price: 60.00,
+    category: "pants",
+    gender: "men",
+    sizes: ["30", "32", "34", "36"],
+    color: "Khaki Tan",
+    image_url: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=80",
+    stock: 28,
+    is_featured: false,
+    is_new: false
+  },
+  {
+    id: 11,
+    name: "Linen Blend Summer Camp Shirt",
+    description: "Breathable open collar short-sleeve shirt crafted from airy flax linen blend. Vacation ready.",
+    price: 42.00,
+    original_price: 55.00,
+    category: "shirts",
+    gender: "men",
+    sizes: ["S", "M", "L", "XL"],
+    color: "Natural Ecru",
+    image_url: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=700&q=80",
+    stock: 19,
+    is_featured: true,
+    is_new: false
+  },
+  {
+    id: 12,
+    name: "Tiered Cotton Maxi Sun Dress",
+    description: "Airy tiered skirt with smocked elastic bodice and adjustable tie shoulders. Ultimate feminine silhouette.",
+    price: 72.00,
+    original_price: 92.00,
+    category: "dresses",
+    gender: "women",
+    sizes: ["S", "M", "L"],
+    color: "Sunset Coral",
+    image_url: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&q=80",
+    stock: 14,
+    is_featured: false,
+    is_new: true
+  }
+];
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = SAMPLE_PRODUCTS;
+}

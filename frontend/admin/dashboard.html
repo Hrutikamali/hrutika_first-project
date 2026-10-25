@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | StyleHub Inventory</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- Top Admin Bar -->
+  <header class="admin-header">
+    <div class="admin-brand">
+      Style<span>Hub</span>
+      <span class="admin-badge-tag">Admin Console</span>
+    </div>
+
+    <div class="admin-user-nav">
+      <span id="admin-user-display" style="color: #cbd5e1;">Logged in as Manager</span>
+      <a href="../index.html" target="_blank" style="color: #94a3b8; font-size: 0.85rem;">View Live Storefront ↗</a>
+      <button type="button" class="btn-admin-logout" id="btn-admin-logout">Sign Out</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="admin-container">
+    <!-- Stat Cards -->
+    <div class="admin-stats-grid">
+      <div class="stat-card">
+        <span class="label">Total Products</span>
+        <span class="val" id="stat-total-products">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="label">Total Stock Units</span>
+        <span class="val" id="stat-total-stock">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="label">Average Item Price</span>
+        <span class="val" id="stat-avg-price">$0.00</span>
+      </div>
+      <div class="stat-card">
+        <span class="label">Low Stock Alerts</span>
+        <span class="val" id="stat-low-stock" style="color: var(--accent);">0</span>
+      </div>
+    </div>
+
+    <!-- Product Management Table Card -->
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <div>
+          <h1 class="admin-card-title">Product Inventory & Catalog</h1>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">
+            Create, update, or remove clothing items across all departments.
+          </p>
+        </div>
+        <div>
+          <button type="button" class="btn btn-primary" id="btn-open-create-modal">
+            + Add New Product
+          </button>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Department</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Sizes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-products-tbody">
+            <!-- Injected via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal for Create / Edit Product -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-heading">Add New Clothing Product</h2>
+        <button type="button" class="modal-close" id="btn-close-modal">&times;</button>
+      </div>
+
+      <form id="product-form">
+        <input type="hidden" id="form-product-id">
+
+        <div style="margin-bottom: 1rem;">
+          <label for="form-name" style="display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem;">Product Name *</label>
+          <input type="text" id="form-name" class="newsletter-input" style="width: 100%;" placeholder="e.g. Vintage Denim Jacket" required>
+        </div>
+
+        <div class="form-grid-2" style="margin-bottom: 1rem;">
+          <div>
+            <label for="form-gender" style="display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem;">Department *</label>
+            <select id="form-gender" class="sort-select" style="width: 100%;" required>
+              <option value="men">Men</option>
+              <option value="women">Women</option>
+              <option value="unisex">Unisex</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="form-category" style="display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem;">Category *</label>
+            <select id="form-category" class="sort-select" style="width: 100%;" required>
+              <option value="shirts">Shirts</option>
+              <option value="t-shirts">T-Shirts</option>
+              <option value="tops">Tops</option>
+              <option value="jeans">Jeans</option>
+              <option value="pants">Pants</option>
+              <option value="dresses">Dresses</option>
+              <option value="jackets">Jackets</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid-2" style="margin-bottom: 1rem;">
+          <div>
+            <label for="form-price" style="display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem;">Price ($) *</label>
+            <input type="number" id="form-price" class="newsletter-input" style="width: 100%;" step="0.01" min="1" placeholder="49.99" required>
+          </div>
+
+          <div>
+            <label for="form-stock" style="display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem;">Stock Count *</label>
+            <input type="number" id="form-stock" class="newsletter-input" style="width: 100%;" min="0" placeholder="25" required>
+          </div>
+        </div>
+
+        <div class="form-grid-2" style="margin-bottom: 1rem;">
+          <div>
+            <label for="form-sizes" style="display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem;">Sizes (comma separated) *</label>
+            <input type="text" id="form-sizes" class="newsletter-input" style="width: 100%;" placeholder="S, M, L, XL" required>
+          </div>
+
+          <div>
+            <label for="form-color" style="display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem;">Color Name</label>
+            <input type="text" id="form-color" class="newsletter-input" style="width: 100%;" placeholder="Deep Indigo">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label for="form-image" style="display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem;">Image URL *</label>
+          <input type="url" id="form-image" class="newsletter-input" style="width: 100%;" placeholder="https://images.unsplash.com/..." required>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <label for="form-desc" style="display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem;">Description *</label>
+          <textarea id="form-desc" class="form-control" rows="3" placeholder="Describe the fabrics, cut, and care instructions..." required></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+          <button type="button" class="btn btn-outline" id="btn-cancel-modal" style="color: var(--secondary); border-color: var(--border-light);">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-product">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Shared main script and admin script -->
+  <script src="../js/sample-data.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View your StyleHub cart, review selected clothing items, adjust quantities, apply promotional discounts, and proceed to checkout.">
+  <title>Shopping Cart | StyleHub</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .cart-page-section {
+      padding: 3rem 0 5rem;
+    }
+
+    .cart-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 1rem;
+    }
+
+    .cart-title-row h1 {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .cart-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* Cart Items Table / List */
+    .cart-items-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .cart-item-row {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: grid;
+      grid-template-columns: 90px 1fr auto auto;
+      gap: 1.5rem;
+      align-items: center;
+      transition: box-shadow var(--transition-fast);
+    }
+    .cart-item-row:hover {
+      box-shadow: var(--shadow-sm);
+    }
+
+    .cart-item-img {
+      width: 90px;
+      height: 110px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      background: var(--bg-alt);
+    }
+
+    .cart-item-info h3 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.35rem;
+    }
+
+    .cart-item-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .cart-item-price {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--primary);
+    }
+
+    .cart-qty-controls {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .cart-qty-btn {
+      width: 34px;
+      height: 34px;
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-alt);
+      color: var(--primary);
+      transition: background var(--transition-fast);
+    }
+    .cart-qty-btn:hover {
+      background: var(--border-light);
+    }
+
+    .cart-qty-val {
+      width: 36px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .cart-item-total {
+      text-align: right;
+      min-width: 90px;
+    }
+
+    .cart-item-total-price {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .btn-remove-item {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-top: 0.5rem;
+      transition: color var(--transition-fast);
+    }
+    .btn-remove-item:hover {
+      color: var(--danger);
+    }
+
+    /* Order Summary Sidebar */
+    .order-summary-card {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      position: sticky;
+      top: 96px;
+    }
+
+    .order-summary-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      color: var(--secondary);
+    }
+
+    .summary-row.total-row {
+      border-top: 2px solid var(--border-light);
+      padding-top: 1.25rem;
+      margin-top: 1.25rem;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary);
+      font-family: var(--font-heading);
+    }
+
+    .promo-input-row {
+      display: flex;
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+    }
+    .promo-input-row input {
+      flex: 1;
+      padding: 0.65rem 0.9rem;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      outline: none;
+    }
+    .promo-input-row input:focus {
+      border-color: var(--accent);
+    }
+
+    .btn-checkout {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: var(--radius-md);
+      background: var(--accent);
+      color: #fff;
+      transition: all var(--transition-fast);
+      margin-top: 1rem;
+    }
+    .btn-checkout:hover {
+      background: var(--accent-hover);
+      box-shadow: 0 10px 20px -5px rgba(225, 29, 72, 0.4);
+    }
+
+    .free-shipping-progress {
+      background: var(--bg-alt);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      border: 1px solid var(--border-light);
+    }
+    .progress-bar-bg {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: var(--radius-full);
+      margin-top: 0.5rem;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--success);
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    @media (max-width: 900px) {
+      .cart-layout {
+        grid-template-columns: 1fr;
+      }
+      .order-summary-card {
+        position: static;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .cart-item-row {
+        grid-template-columns: 80px 1fr;
+        gap: 1rem;
+      }
+      .cart-item-total {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid var(--border-light);
+        padding-top: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="site-header">
+    <div class="container navbar">
+      <a href="index.html" class="nav-brand">
+        Style<span>Hub</span>
+        <span class="brand-badge">Official</span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle navigation">☰</button>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link">Shop All</a>
+        <a href="shop.html?gender=men" class="nav-link">Men</a>
+        <a href="shop.html?gender=women" class="nav-link">Women</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="shop.html" class="nav-action-btn" title="Search">🔍</a>
+        <a href="cart.html" class="nav-action-btn active" title="Cart">
+          🛒
+          <span class="cart-badge" style="display: none;">0</span>
+        </a>
+        <a href="admin/login.html" class="nav-admin-link">Admin</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Cart Page Content -->
+  <main class="container cart-page-section">
+    <div class="cart-title-row">
+      <h1>Your Shopping Bag</h1>
+      <a href="shop.html" style="font-size: 0.9rem; font-weight: 600; color: var(--accent);">
+        ← Continue Shopping
+      </a>
+    </div>
+
+    <div class="cart-layout" id="cart-content-wrapper">
+      <!-- Left: Item List -->
+      <div class="cart-items-container" id="cart-items-list">
+        <!-- Rendered via JavaScript -->
+      </div>
+
+      <!-- Right: Summary -->
+      <aside class="order-summary-card">
+        <h2 class="order-summary-title">Order Summary</h2>
+
+        <!-- Free shipping progress -->
+        <div class="free-shipping-progress" id="shipping-tracker">
+          <span id="shipping-tracker-text">Add $75.00 for FREE Express Shipping</span>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="shipping-tracker-bar"></div>
+          </div>
+        </div>
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <strong id="cart-subtotal">$0.00</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Estimated Shipping</span>
+          <span id="cart-shipping">$0.00</span>
+        </div>
+
+        <div class="summary-row" id="discount-row" style="display: none; color: var(--success);">
+          <span>Promo Discount (20%)</span>
+          <strong id="cart-discount">-$0.00</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Estimated Sales Tax (6%)</span>
+          <span id="cart-tax">$0.00</span>
+        </div>
+
+        <!-- Promo Code Input -->
+        <div class="promo-input-row">
+          <input type="text" id="promo-input" placeholder="Promo code (e.g. STYLE20)">
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-apply-promo">Apply</button>
+        </div>
+
+        <div class="summary-row total-row">
+          <span>Total</span>
+          <span id="cart-total">$0.00</span>
+        </div>
+
+        <button type="button" class="btn-checkout" id="btn-checkout">
+          Proceed to Checkout 🔒
+        </button>
+
+        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);">
+          🔒 Guaranteed Safe & Secure 256-Bit SSL Checkout
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <div>&copy; 2026 StyleHub Inc. All rights reserved.</div>
+      <div><a href="shop.html" style="color: #cbd5e1;">Return to Shop</a></div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+</html>
